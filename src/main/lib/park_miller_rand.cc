@@ -68,3 +68,4 @@ long ParkMillerOneRand::GetOneRandInt(){
     if (seed_ < 0) seed_ += kM;
     return seed_;
 }
+

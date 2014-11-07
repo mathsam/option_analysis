@@ -1,0 +1,15 @@
+CC = g++
+CCFLAG = -fPIC
+
+OBJS = park_miller_rand_cwrapper.o park_miller_rand_lib.o
+
+all: myrandlib.so
+
+park_miller_rand_cwrapper.o: park_miller_rand_cwrapper.c
+	$(CC) -c $(CCFLAG) park_miller_rand_cwrapper.c -o park_miller_rand_cwrapper.o
+
+park_miller_rand_lib.o: park_miller_rand.cc
+	$(CC) -c $(CCFLAG) park_miller_rand.cc -o park_miller_rand_lib.o
+
+myrandlib.so: $(OBJS) 
+	$(CC) -shared -Wl,-soname,myrandlib.so $(OBJS) -o myrandlib.so 

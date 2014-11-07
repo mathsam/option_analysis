@@ -1,13 +1,14 @@
 CC = g++
 CC_FLAGS = -Wall -g
 
-EXEC = parkmiller.x
-SRCS = park_miller_rand.cc test_park_miller_rand.cc
-OBJS = $(SRCS:.c=.o)
 
-all: $(EXEC) 
+all: parkmiller.x
 
-$(EXEC): $(OBJS) 
-	$(CC) -o $(EXEC) $(OBJS)
-%.o: %.cc
-	$(CC) -c $(CC_FLAGS) &< -o $@ 
+parkmiller.x: park_miller_rand.o test_park_miller_rand.o 
+	$(CC)  park_miller_rand.o test_park_miller_rand.o -o parkmiller.x
+
+park_miller_rand.o: park_miller_rand.cc
+	$(CC) $(CC_FLAGS) -c park_miller_rand.cc -o park_miller_rand.o
+
+test_park_miller_rand.o: test_park_miller_rand.cc
+	$(CC) $(CC_FLAGS) -c test_park_miller_rand.cc -o test_park_miller_rand.o
