@@ -16,14 +16,15 @@ public:
 
     void set_seed(long seed);
 
-/*\brief return the upper bound for random number 
+/**
+\brief return the upper bound for random number 
 
 The random number generated is within a min and maxmum bound. This is
 [1, 2147483646] in this implementation.
 */
     unsigned long get_range_max();
 
-/* return the lower bound for random number */
+/// return the lower bound for random number
     unsigned long get_range_min();
 private:
     long seed_;

@@ -42,10 +42,10 @@ To aviod multiplication of 32-bit numbers on a 32-bit machine, Schrage's algo is
     M = AQ + R,\ Q = [M/A],\ R = M\mathrm{\ mod} A
 \f]
 The brackets [] denotes integer division. We want R to be small and choose Q = 44488 and R = 3399. Note R < A and R < Q. Then the iteration becomes
-\f[
+\f{eqnarray*}{
     X_{k+1} &=& A (I_i - [X_i/q]\cdot Q) - R\cdot [X_i/Q] \\
             &=& A (I_i \ \mathrm{mod} Q) - R\cdot [X_i/Q]
-\f]
+\f}
 If \f$ I_{k+1} < 0 \f$, then
 \f[
     X_{k+1} = X_{k+1} + m
@@ -53,15 +53,15 @@ If \f$ I_{k+1} < 0 \f$, then
 
 Proof: the key to prove is that \f$ x\mathrm{mod}b = x - [x/b]b \f$.
 As M = AQ + R, we have
-\f[
-    X_{k+1}&=&AX_{k}-[\frac{AX_{k}}{AQ+R}](AQ+R)\\
-           &=&AX_{k}-[\frac{X_{k}}{Q}\frac{1}{1+R/(AQ)}](AQ+R)
-\f]
+\f{eqnarray*}{
+    X_{k+1}&=AX_{k}-[\frac{AX_{k}}{AQ+R}](AQ+R)\\
+           &=AX_{k}-[\frac{X_{k}}{Q}\frac{1}{1+R/(AQ)}](AQ+R)
+\f}
 Because R/AQ << 1, use Taylor expansion, we have
 \f[
     X_{k+1}=AX_{k}-[\frac{X_{k}}{Q}-\frac{X_{k}}{AQ}\frac{R}{Q}](AQ+R)
 \f]
-Because AQ~M, R<Q, we have \f$ \frac{X_{k}}{AQ}\frac{R}{Q} < 1\f$. So \f$ [\frac{X_{k}}{Q}-\frac{X_{k}}{AQ}\frac{R}{Q}] \f$ is either \f$ [\frac{X_{k}}{Q} \f$ or \f$ [\frac{X_{k}}{Q}-1 \f$
+Because AQ~M, R<Q, we have \f$ \frac{X_{k}}{AQ}\frac{R}{Q} < 1\f$. So \f$ [\frac{X_{k}}{Q}-\frac{X_{k}}{AQ}\frac{R}{Q}] \f$ is either \f$ [\frac{X_{k}}{Q}] \f$ or \f$ [\frac{X_{k}}{Q}]-1 \f$
 */
 long ParkMillerOneRand::GetOneRandInt(){
     seed_ = kA*(seed_ % kQ) - kR*(seed_ / kQ);

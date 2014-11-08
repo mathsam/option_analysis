@@ -1,10 +1,12 @@
 #include"park_miller_rand.h"
 
-/* 
+/**
+\fn n_rand
 \brief Generate n random numbers
 
-Input number of integers to return and seed for RNG
-Return: an array of n integers
+@param num : the number of random numbers to return
+@param seed: seed for random number generation
+@return : an array of num of random numbers
 
 Intends to be a wrapper to call from Python
 */
