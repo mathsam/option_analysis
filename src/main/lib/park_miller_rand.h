@@ -6,6 +6,8 @@
 
 \brief Generate one random number using Park Miller congruential generator
            Need a none zero seed; default seed is 1
+
+long integer on the platform must at least be 32 bit
 */
 
 class ParkMillerOneRand{
