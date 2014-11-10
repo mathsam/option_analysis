@@ -5,19 +5,11 @@
 static int box_muller_polar(double uniform_rand1, double uniform_rand2,
                             double & norm_rand1,  double & norm_rand2);
 
-RandGenerator::RandGenerator(int dimen):
-    dimension_(dimen){
-    if (dimen < 1)
-        throw std::invalid_argument("dimension must no less than 1");
-}
-
-inline int RandGenerator::get_dimension() const{
-    return dimension_;
-}
+RandGenerator::RandGenerator(){}
 
 void RandGenerator::GenNormRand(std::vector<double> & rand_array){
-    if (rand_array.size() != dimension_)
-        throw std::invalid_argument("vector's size must equal RNG's dimension");
+    if (rand_array.size() < 1)
+        throw std::invalid_argument("vector's size must not be zero");
 
     ///if size of rand_array is an odd number, get a normal random number for
     ///rand_array[0] first, and then the size rest of the array is even
@@ -35,8 +27,6 @@ void RandGenerator::GenNormRand(std::vector<double> & rand_array){
 }
 
 void RandGenerator::GenNormRand(double & rand_num){
-    if (1 != dimension_)
-        throw std::invalid_argument("RNG's dimension is not 1");
 
     double uniform_rand1, uniform_rand2;
     double norm_rand1, norm_rand2;
@@ -50,12 +40,6 @@ void RandGenerator::GenNormRand(double & rand_num){
     rand_num = norm_rand1;
 }
 
-void RandGenerator::ResetDimension(int new_dimen){
-    if (new_dimen < 1)
-        throw std::invalid_argument("dimension must no less than 1");
-    else
-        dimension_ = (unsigned int) new_dimen;
-}
 
 /**
 @brief Box-Muller algorithm in polar form to transform two uniformly distributed

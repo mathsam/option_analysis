@@ -15,14 +15,11 @@ numbers
 class RandGenerator{
 public:
     /**
-    @brief generate a RandGenerator with a certain dimensionality (default is 1)
+    @brief generate a RandGenerator which contains nothing 
 
-    @param dimen defines how many random numbers to return in one draw
+    @note this version does not require a given dimensionality
     */
-    RandGenerator(int dimen=1);
-
-    ///returns the dimension of current RandGenerator instance
-    inline int get_dimension() const;
+    RandGenerator();
 
     ///bridge pattern
     virtual RandGenerator* clone() const = 0;
@@ -49,7 +46,7 @@ public:
     virtual void SkipNumOfPath(int num_of_path) = 0;
 
     /// set the seed for random number generator
-    virtual void SetSeed(int seed) = 0;
+    virtual void set_seed(int seed) = 0;
 
     /// reset the generator to its initial state (when constructed)
     virtual void Reset() = 0;
@@ -70,12 +67,5 @@ public:
     output. The dimensionality of generator must be 1 
     */
     virtual void GenNormRand(double & rand_num);
-
-    ///reset dimensionality of the random number generator
-    virtual void ResetDimension(int new_dimen);
-
-private:
-    unsigned int dimension_;///< dimensionality that every derived class must 
-                            ///< have
 };
 #endif //RAND_GENERATOR_H

@@ -76,3 +76,42 @@ long ParkMillerOneRand::GetOneRandInt(){
     return seed_;
 }
 
+ParkMillerRand::ParkMillerRand(long seed):
+    original_seed_(seed){
+    ParkMillerOneRand int_rand_generator_(seed);
+    ratio_int2uniform_ = 1.0/((double) int_rand_generator_.get_range_max()+1.0);
+    ///< + 1 thus cannot reach 1.0 
+}
+
+RandGenerator* ParkMillerRand:: clone() const{
+    return new ParkMillerRand(*this);
+}
+
+void ParkMillerRand:: GenUniformRand(std::vector<double> & rand_array){
+    if(rand_array.size() < 1)
+        throw std::invalid_argument("array size must be no less than 1");
+
+    for(int i=0; i<rand_array.size(); i++)
+        rand_array[i] = (double) int_rand_generator_.GetOneRandInt()
+                        * ratio_int2uniform_;
+}
+
+void ParkMillerRand:: GenUniformRand(double & rand_num){
+    rand_num = (double) int_rand_generator_.GetOneRandInt() 
+               * ratio_int2uniform_;
+}
+
+void ParkMillerRand:: SkipNumOfPath(int num_of_path){
+    if(num_of_path < 0)
+        throw std::invalid_argument("the number of path to skip cannot be negative");
+    for(int i=0; i<num_of_path; i++)
+        int_rand_generator_.GetOneRandInt();
+}
+
+void ParkMillerRand:: set_seed(int seed){
+    int_rand_generator_.set_seed(seed);
+}
+
+void ParkMillerRand:: Reset(){
+    int_rand_generator_.set_seed(original_seed_);
+}
