@@ -18,4 +18,8 @@ Intends to be a wrapper to call from Python
 */
 extern "C" int* n_rand(int num , int seed);
 
+extern "C" double* uniform_rand(int num, int seed);
+
+extern "C" double* norm_rand(int num, int seed);
+
 #endif //PARK_MILLER_RAND_CWRAPPER_H

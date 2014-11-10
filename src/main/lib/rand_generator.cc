@@ -84,12 +84,12 @@ static int box_muller_polar(double uniform_rand1, double uniform_rand2,
     double s;
     double u = 2.0*uniform_rand1 - 1.0; ///< transform (0,1) dist. into (-1,1)
     double v = 2.0*uniform_rand2 - 1.0;
-    s = std::sqrt(u*u + v*v);
+    s = u*u + v*v;
     if(s > 1.0 || s== 0.0)  
         return 1;
 
     double s_ratio = std::sqrt(-2.0* std::log(s) / s);
-    norm_rand1 = uniform_rand1*s_ratio;
-    norm_rand2 = uniform_rand2*s_ratio;
+    norm_rand1 = u * s_ratio;
+    norm_rand2 = v * s_ratio;
     return 0;
 }
