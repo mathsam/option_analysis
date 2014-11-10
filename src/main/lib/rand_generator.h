@@ -8,9 +8,8 @@
 
 Usage:
 
-Set dimensionality using constructor or method set_dimension;
-Get a vector of random numbers if dimensionality > 1, or an integer if 
-dimensionality = 1
+Overloaded for generating one random number and generating a vector of random 
+numbers
 */
 
 class RandGenerator{
@@ -62,7 +61,7 @@ public:
     output, whose length must be the same as the dimensionality of the
     generator 
     */
-    virtual void GetNormRand(std::vector<double> & rand_array);
+    virtual void GenNormRand(std::vector<double> & rand_array);
 
     /**
     @brief generate one standard normal distribution
@@ -70,7 +69,7 @@ public:
     @param rand_num a double passed in by reference to store the
     output. The dimensionality of generator must be 1 
     */
-    virtual void GetNormRand(double & rand_num);
+    virtual void GenNormRand(double & rand_num);
 
     ///reset dimensionality of the random number generator
     virtual void ResetDimension(int new_dimen);

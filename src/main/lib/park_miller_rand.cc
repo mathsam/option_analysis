@@ -28,20 +28,25 @@ unsigned long ParkMillerOneRand::get_range_max(){
 /**
 \brief returns one random integer
 
-Lehmer random number generator (RNG) or Park-Miler RNG. It is a congruential generator.
+Lehmer random number generator (RNG) or Park-Miler RNG. It is a congruential 
+generator.
 
 Park-Miller Algorithm:
 \f[
     X_{k+1} =  A\cdot X_{k}\mathrm{\ mod}\ M 
 \f]
-Based on Diane Crawford (1993, Technical correspondence, Communications of the ACM, Vol 36), the parameters are choosen as A = 48271 and M = 2147483647 (which is 2^31 - 1).
+Based on Diane Crawford (1993, Technical correspondence, 
+Communications of the ACM, Vol 36), the parameters are choosen as A = 48271 
+and M = 2147483647 (which is 2^31 - 1).
 
 Schrage's Algorithm:
-To aviod multiplication of 32-bit numbers on a 32-bit machine, Schrage's algo is used. It is based on an approximate factorization of M as
+To aviod multiplication of 32-bit numbers on a 32-bit machine, Schrage's algo 
+is used. It is based on an approximate factorization of M as
 \f[
     M = AQ + R,\ Q = [M/A],\ R = M\mathrm{\ mod} A
 \f]
-The brackets [] denotes integer division. We want R to be small and choose Q = 44488 and R = 3399. Note R < A and R < Q. Then the iteration becomes
+The brackets [] denotes integer division. We want R to be small and choose 
+Q = 44488 and R = 3399. Note R < A and R < Q. Then the iteration becomes
 \f{eqnarray*}{
     X_{k+1} &=& A (I_i - [X_i/q]\cdot Q) - R\cdot [X_i/Q] \\
             &=& A (I_i \ \mathrm{mod} Q) - R\cdot [X_i/Q]
@@ -61,7 +66,9 @@ Because R/AQ << 1, use Taylor expansion, we have
 \f[
     X_{k+1}=AX_{k}-[\frac{X_{k}}{Q}-\frac{X_{k}}{AQ}\frac{R}{Q}](AQ+R)
 \f]
-Because AQ~M, R<Q, we have \f$ \frac{X_{k}}{AQ}\frac{R}{Q} < 1\f$. So \f$ [\frac{X_{k}}{Q}-\frac{X_{k}}{AQ}\frac{R}{Q}] \f$ is either \f$ [\frac{X_{k}}{Q}] \f$ or \f$ [\frac{X_{k}}{Q}]-1 \f$
+Because AQ~M, R<Q, we have \f$ \frac{X_{k}}{AQ}\frac{R}{Q} < 1\f$. 
+So \f$ [\frac{X_{k}}{Q}-\frac{X_{k}}{AQ}\frac{R}{Q}] \f$ is either 
+\f$ [\frac{X_{k}}{Q}] \f$ or \f$ [\frac{X_{k}}{Q}]-1 \f$
 */
 long ParkMillerOneRand::GetOneRandInt(){
     seed_ = kA*(seed_ % kQ) - kR*(seed_ / kQ);
