@@ -28,17 +28,15 @@ public:
     @brief generate a uniformly distributed random number array within (0,1)
 
     @param rand_array a vector of double passed in by reference to store the
-    output, whose length needs to be the same as the dimensionality
-    Note that 0 and 1 are excluded.
+    output.
+    @note 0 and 1 are excluded.
     */
     virtual void GenUniformRand(std::vector<double> & rand_array) = 0;
 
     /**
     @brief generator one uniformly distributed random number within (0,1)
 
-    @param rand_num a double passed in by reference to store the output. In 
-    this case, dimensionality of generator must be 1.
-    */
+    @param rand_num a double passed in by reference to store the output.*/
     virtual void GenUniformRand(double & rand_num) = 0;
 
     /// skip a certain number of random numbers in order to avoid same numbers
@@ -55,8 +53,7 @@ public:
     @brief generate an array of standard normal distribution
 
     @param rand_array a vector of double passed in by reference to store the
-    output, whose length must be the same as the dimensionality of the
-    generator 
+    output    
     */
     virtual void GenNormRand(std::vector<double> & rand_array);
 
@@ -64,7 +61,7 @@ public:
     @brief generate one standard normal distribution
 
     @param rand_num a double passed in by reference to store the
-    output. The dimensionality of generator must be 1 
+    output. 
     */
     virtual void GenNormRand(double & rand_num);
 };
