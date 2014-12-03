@@ -10,7 +10,7 @@
  */
 class SmartParameter{
 public:
-    SmartParameter();
+    SmartParameter(){};
 
     /**
     * @brief get value at a give time
@@ -38,6 +38,7 @@ public:
      * @brief virtual constructor
     */
     virtual SmartParameter * clone() const = 0;
+
 
 };
 
@@ -79,9 +80,9 @@ private:
  */
 class MarketParameters{
 public:
-    MarketParameters(SmartParameter & sigma, 
-                     SmartParameter & r,
-                     SmartParameter & d):
+    MarketParameters(const SmartParameter & sigma, 
+                     const SmartParameter & r,
+                     const SmartParameter & d):
       volatility_(sigma.clone()), 
       interest_rate_(r.clone()),
       divident_rate_(d.clone()){};

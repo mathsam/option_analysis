@@ -1,5 +1,6 @@
 #include<iostream>
 #include"park_miller_rand.h"
+#include"rand_generator.h"
 
 using namespace std;
 

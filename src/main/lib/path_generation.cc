@@ -6,7 +6,7 @@ PathGenerator::PathGenerator(const MarketParameters & market_params,
                              RandGenerator & rand_gen,
                   double spot, int num_times, double expiration_time):
   market_params_(market_params), rand_generator_(rand_gen),
-  spot_(spot), num_times_(num_times) {
+  spot_(spot), num_times_(num_times), time_points_(num_times) {
     if (spot <= 0.0)
         throw std::invalid_argument("spot price must be positive");
 
@@ -16,9 +16,8 @@ PathGenerator::PathGenerator(const MarketParameters & market_params,
     if (expiration_time <= 0.0)
         throw std::invalid_argument("expiration time must be positive");
 
-    std::vector<double> time_points_(num_times);
     for(int i=0; i < num_times; ++i){
-        time_points_[i] = (i+1)/num_times * expiration_time;
+        time_points_[i] = double(i+1)/double(num_times) * expiration_time;
     }
 }
 
@@ -51,9 +50,13 @@ void PathGenerator::GetOnePath(std::vector<double> & path_out){
                      "size of path_out does not match number of times");
 
     double S_i     = spot_;
+
     double t_left  = 0;
-    double t_right = time_points_[0];
+    double t_right;
     for(int i = 0; i < num_times_; ++i){
+        if(i>0) t_left = time_points_[i-1];
+        t_right = time_points_[i];
+
         double int_sigma_square = market_params_.volatility_->IntegralSquare(
                                                             t_left, t_right);
         double norm_rand;
