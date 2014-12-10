@@ -1,5 +1,5 @@
 CC = g++
-CC_FLAGS = -Wall -g
+CC_FLAGS = -Wall -O3
 
 
 all: parkmiller.x path_gen.x
