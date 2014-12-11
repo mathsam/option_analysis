@@ -42,6 +42,9 @@ public:
     /// move semantics: assgin with rvalue Matrix2d object
     Matrix2d & operator=(Matrix2d && matrix_in);
 
+    /// asign all elements in the matrix to a single value
+    Matrix2d & operator=(double value);
+
     /// access an element in a matrix as A(i,j)
     double & operator()(int i_row, int j_colmn);
 
@@ -62,9 +65,11 @@ public:
 
     Matrix2d & operator+=(const Matrix2d & matrix_in);
 
-    /// add a matrix with a scalar, which mean add the scaler to each element in
+    /// add a matrix with a scalar, which mean add the scalar to each element in
     /// the matrix
-    Matrix2d operator+(double scaler);
+    friend Matrix2d operator+(const Matrix2d & rhs, double scalar);
+
+    friend Matrix2d operator+(double scalar, const Matrix2d & rhs);
 
     Matrix2d & operator+=(double scalar);
 
@@ -74,7 +79,9 @@ public:
     Matrix2d & operator-=(const Matrix2d & matrix_in);
 
     /// substract a scalar from a matrix
-    Matrix2d   operator-(double scaler);
+    friend Matrix2d operator-(const Matrix2d & rhs, double scalar);
+
+    friend Matrix2d operator-(double scalar, const Matrix2d & rhs);
 
     Matrix2d & operator-=(double scalar);
 
@@ -93,7 +100,9 @@ public:
     Matrix2d & operator*=(const Matrix2d & matrix_in);
 
     /// multiply a matrix by a scalar
-    Matrix2d   operator*(double scaler);
+    friend Matrix2d operator*(const Matrix2d & rhs, double scalar);
+
+    friend Matrix2d operator*(double scalar, const Matrix2d & rhs);
 
     Matrix2d & operator*=(double scalar);
 
@@ -101,7 +110,9 @@ public:
 
     Matrix2d & operator/=(const Matrix2d & matrix_in);
 
-    Matrix2d   operator/(double scalar);
+    friend Matrix2d operator/(const Matrix2d & rhs, double scalar);
+
+    friend Matrix2d operator/(double scalar, const Matrix2d & rhs);
 
     Matrix2d & operator/=(double scalar);
 

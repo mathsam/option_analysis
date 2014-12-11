@@ -76,6 +76,15 @@ Matrix2d & Matrix2d::operator=(Matrix2d && matrix_in){
     return *this;
 }
 
+Matrix2d & Matrix2d::operator=(double value){
+    for(int i = 0; i < num_rows_; i++){
+        for(int j = 0; j < num_columns_; j++){
+            array2d_[i][j] = value;
+        }
+    }
+    LU_if_updated_ = false;
+}
+
 double & Matrix2d::operator()(int i_row, int j_colmn){
     return array2d_[i_row][j_colmn];
 }
@@ -104,8 +113,14 @@ Matrix2d & Matrix2d::operator+=(const Matrix2d & matrix_in){
     return *this;
 }
 
-Matrix2d Matrix2d::operator+(double scalar){
-    Matrix2d matrix_out(array2d_);
+Matrix2d operator+(const Matrix2d & rhs, double scalar){
+    Matrix2d matrix_out(rhs.array2d_);
+    matrix_out += scalar;
+    return matrix_out;
+}
+
+Matrix2d operator+(double scalar, const Matrix2d & rhs){
+    Matrix2d matrix_out(rhs.array2d_);
     matrix_out += scalar;
     return matrix_out;
 }
@@ -140,8 +155,14 @@ Matrix2d & Matrix2d::operator-=(const Matrix2d & matrix_in){
     return *this;
 }
 
-Matrix2d Matrix2d::operator-(double scalar){
-    Matrix2d matrix_out(array2d_);
+Matrix2d operator-(const Matrix2d & rhs, double scalar){
+    Matrix2d matrix_out(rhs.array2d_);
+    matrix_out -= scalar;
+    return matrix_out;
+}
+
+Matrix2d operator-(double scalar, const Matrix2d & rhs){
+    Matrix2d matrix_out(rhs.array2d_);
     matrix_out -= scalar;
     return matrix_out;
 }
@@ -195,8 +216,14 @@ Matrix2d & Matrix2d::operator*=(const Matrix2d & matrix_in){
     return *this;
 } 
 
-Matrix2d Matrix2d::operator*(double scalar){
-    Matrix2d matrix_out(*this);
+Matrix2d operator*(const Matrix2d & rhs, double scalar){
+    Matrix2d matrix_out(rhs);
+    matrix_out *= scalar;
+    return matrix_out;
+}
+
+Matrix2d operator*(double scalar, const Matrix2d & rhs){
+    Matrix2d matrix_out(rhs);
     matrix_out *= scalar;
     return matrix_out;
 }
@@ -221,7 +248,7 @@ Matrix2d & Matrix2d::operator*=(double scalar){
 
 Matrix2d Matrix2d::operator/(const Matrix2d & matrix_in){
     Matrix2d matrix_out(array2d_);
-    matrix_out *= matrix_in;
+    matrix_out /= matrix_in;
     return matrix_out;
 }
 
@@ -239,8 +266,14 @@ Matrix2d & Matrix2d::operator/=(const Matrix2d & matrix_in){
     return *this;
 }
 
-Matrix2d Matrix2d::operator/(double scalar){
-    Matrix2d matrix_out(*this);
+Matrix2d operator/(const Matrix2d & rhs, double scalar){
+    Matrix2d matrix_out(rhs);
+    matrix_out /= scalar;
+    return matrix_out;
+}
+
+Matrix2d operator/(double scalar, const Matrix2d & rhs){
+    Matrix2d matrix_out(rhs);
     matrix_out /= scalar;
     return matrix_out;
 }
