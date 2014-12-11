@@ -384,6 +384,37 @@ double Matrix2d::det(){
     return det_;
 }
 
+/**
+ * Algorithm:
+ *   For details, refer to Numerical Recipes in C by William H. Press, 
+ *   Saul A. Teukolsky, et. al.
+ *
+ * LU decomposition:
+ * \f[
+ *    M=L\cdot U
+ * \f]
+ * where \f$ M\f$ is square matrix. \f$L\f$ is a matrix with only lower
+ * elements, like
+ \f[
+  L=\left[\begin{array}{ccc}
+  1\\
+  \alpha_{21} & 1\\
+  \alpha_{31} & \alpha_{23} & 1
+  \end{array}\right]
+ \f]
+ * And \f$U\f$ is a matrix with only upper elements, like
+\f[
+ U=\left[\begin{array}{ccc}
+\beta_{11} & \beta_{12} & \beta_{13}\\
+ & \beta_{22} & \beta_{23}\\
+ &  & \beta_{33}
+\end{array}\right]
+\f]
+ *
+ * Implicity pivoting:
+ *   permutaion_ is initially {0, 1, 2, 3, ...}. Its elements are swapped 
+ *   the same as rows in LU_matrix_
+ */
 bool Matrix2d::LU_decompose(double tiny){
     if (LU_if_updated_) return true;
 
@@ -454,21 +485,6 @@ bool Matrix2d::LU_decompose(double tiny){
     if(num_permutation%2 == 1) det_ = - det_;
 
     LU_if_updated_ = true;
-
-#ifdef DEBUG
-    std::cout << "LU decomposition:" << std::endl;
-    std::cout << std::scientific << std::setw(5);
-    for(int i = 0; i < num_rows_; i++){
-        for(int j = 0; j < num_columns_; j++){
-            std::cout << LU_matrix_[i][j] << '\t';
-        }
-        std::cout << '\n';
-    }
-    std::cout << std::endl;
-    for(int i = 0; i < num_rows_; i++)
-        std::cout << permutation_[i] << '\t';
-    std::cout << std::endl;
-#endif
 
     return true;
 }

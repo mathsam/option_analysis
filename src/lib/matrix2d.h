@@ -7,8 +7,38 @@
  *        provides many element-wise array operations: +, -, *, /, and 
  *        matrix operations: dot, left_divide
  * 
+ * @note matrix indexing starts from 0
  * @note binary operations are returned by value. Should turn on optimization to
  *       use RVO. 
+ *
+ * Example usage
+ * @code
+ *   Initialize a matrix
+ *     Matrix2d M(5, 5, 1.0); //5x5 matrix with every element to be 1.0
+ *     Matrix2d D(3, 2, 0.0); //3x2 matrix with every element to be 0.0
+ *
+ *   Access and assign value to a particular element
+ *     M(0,0) = 3.14;
+
+ *   Matrix operations with scalar
+ *     Matrix2d N = M*2.0;
+ *     Matrix2d C = 1.5 / M;
+ *     N += 1.0;
+ *
+ *   Elementwise matrix operation
+ *     D = M + C;
+ *     D = M * C;
+ *
+ *   Matrix multiply
+ *     D = M.dot(C);
+ *
+ *   Evaulate determinant
+ *     double d = D.det();
+ *
+ *   Solve linear equation: A x = b
+ *     b = Matrix2d (5, 1, 1.0);
+ *     Matrix2d x = M.left_divide(b);
+ * @endcode
  */
 
 class Matrix2d{
@@ -45,9 +75,10 @@ public:
     /// asign all elements in the matrix to a single value
     Matrix2d & operator=(double value);
 
-    /// access an element in a matrix as A(i,j)
+    /// access or assign an element in a matrix as A(i,j)
     double & operator()(int i_row, int j_colmn);
 
+    /// access a const matrix
     double operator()(int i_row, int j_colmn) const;
 
     /// returns the number of rows
