@@ -45,7 +45,7 @@ public:
     /// access an element in a matrix as A(i,j)
     double & operator()(int i_row, int j_colmn);
 
-    const double & operator()(int i_row, int j_colmn) const;
+    double operator()(int i_row, int j_colmn) const;
 
     /// returns the number of rows
     inline unsigned int get_num_rows() const{
@@ -121,7 +121,7 @@ public:
      *
      * for Ax = b, x = A.left_divide(b)
      */
-    Matrix2d left_divide(Matrix2d rhs);
+    Matrix2d left_divide(const Matrix2d & b);
 
     /**
      * @brief return determinant of the matrix
@@ -149,7 +149,7 @@ private:
                                                ///< as a vector<double>
     std::vector<std::vector<double> > LU_matrix_; ///< stores the LU 
                                                   ///< decomposition
-    std::vector<std::vector<double> > permutation_;///< stores pivoting info for
+    std::vector<int> permutation_;///< stores pivoting info for
                                                    ///< LU_matrix_
     bool LU_if_updated_;///< is LU decomposition is performed; default false
     double det_; ///< is LU decomp. is performed, determinant is computed
