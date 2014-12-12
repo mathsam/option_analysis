@@ -15,12 +15,17 @@ int main(){
 
     double v, r, strike;
     double spot = 1.0;
+#ifdef INTERACTIVE
     std::cout << "Input volatility: " ;
     std::cin >> v;
     std::cout << "Input interest rate: ";
     std::cin >> r;
     std::cout << "Input strike: ";
     std::cin >> strike;
+#else
+    v = 0.2; r = 0.06; strike = 40.0;
+    spot = strike;
+#endif
     ConstParameter volatility(v);
     ConstParameter interest_rate(r);
     ConstParameter divident_rate(0.0);
@@ -46,10 +51,14 @@ int main(){
 
     LeastSquareMC my_lmc(my_path_gen, vanilla_put, polyfit);
 
-    while(1){
+#ifdef INTERACTIVE
+    while(1)
+#endif
+    {
+#ifdef INTERACTIVE
         std::cout << "Input spot: ";
         std::cin  >> spot;
-
+#endif
         double price = my_lmc.DoSimulation(spot, kNumPaths);
 
         std::cout << "Price is " << price << '\n' << std::endl;

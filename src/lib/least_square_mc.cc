@@ -41,12 +41,14 @@ double LeastSquareMC::DoSimulation(double spot, int num_paths){
         ///estimate for price if not exercise
         func_fit_.AssimilateObs(spot, payoff_if_continue);
         for(int j = 0; j < num_paths; j++){
-            if(func_fit_(stock_paths[j][i]) > excercise_price[j]){
-                current_price[j] = continuation_price[j];
-            }
-            else{
+            /// early excercise only if in money and f(S) < PayOff now
+            if(excercise_price[j] > 0.0 && 
+               func_fit_(stock_paths[j][i]) < excercise_price[j]){ 
                 current_price[j] = excercise_price[j];
                 exercise_time[j] = i;
+            }
+            else{
+                current_price[j] = continuation_price[j];
             }
         }
     }
