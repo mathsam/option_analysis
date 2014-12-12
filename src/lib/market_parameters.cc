@@ -1,6 +1,6 @@
 #include"market_parameters.h"
 
-MarketParameters::MarketParameters(MarketParameters & orig_params){
+MarketParameters::MarketParameters(const MarketParameters & orig_params){
     volatility_    = orig_params.volatility_->clone();
     interest_rate_ = orig_params.interest_rate_->clone();
     divident_rate_ = orig_params.divident_rate_->clone();

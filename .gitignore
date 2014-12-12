@@ -3,4 +3,7 @@
 **/*.pdf
 **/*.so
 **/*.pyc
+**/*.png
+**/*.txt
+**/*.out
 src/doc/

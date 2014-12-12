@@ -1,7 +1,6 @@
 #include<iostream>
 #include"matrix2d.h"
 #include<vector>
-#include"park_miller_rand.h"
 
 int main(){
     std::vector<std::vector<double> > array1 = 
@@ -18,6 +17,7 @@ int main(){
     Matrix2d N(array2);
     
     std::cout << "Matrix M:\n" << M << std::endl;
+    std::cout << "Matrix M transpose: \n" << M.transpose() << std::endl;
     std::cout << "Matrix +,-,*,/ scalar" << std::endl;
     std::cout << M+1.0 << std::endl;
     std::cout << M-1.0 << std::endl;
@@ -48,8 +48,7 @@ int main(){
     std::cout << (M * 2).left_divide(b) << std::endl;
     std::cout << (0.5*M).left_divide(b) << std::endl;
 
-    
-    /**
+/**    
     int kMatrixSize = 1000;
     Matrix2d big_matrix(kMatrixSize, kMatrixSize, 0.0);
     b = Matrix2d (kMatrixSize, 1, 0.0); 
@@ -64,5 +63,5 @@ int main(){
     }
 
     x = big_matrix.left_divide(b);
-    */
+*/
 }

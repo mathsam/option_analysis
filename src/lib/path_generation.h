@@ -3,6 +3,12 @@
 #include"rand_generator.h"
 #include"market_parameters.h"
 #include<vector>
+#include<memory>
+
+/**
+ * @brief generator geometric brownian motion with parameters specified by
+ *        MarketParameters object, and at specified times
+ */
 
 class PathGenerator{
 public:
@@ -17,7 +23,7 @@ public:
      * num_times.
      * @param params_in contains volatility and interest rate
      * @param rand_gen random number generator
-     * @param spot  spot price at time 0
+     * @param spot spot price at time 0
      * @param num_times number of points for the generated path
      * @param expiration_time how long does it expire from now (time 0)
     */
@@ -35,17 +41,26 @@ public:
                   RandGenerator & rand_gen, 
                   double spot, const std::vector<double> & time_points);
 
-    void GetOnePath(std::vector<double> & path_out);
+    PathGenerator(const PathGenerator & path_gen);
 
-    void GetNPaths(std::vector<std::vector<double> > & paths_out);
+    PathGenerator & operator=(const PathGenerator & path_gen);
+
+    /// set spot price (price at time 0)
+    inline void set_spot(double spot){
+        spot_ = spot;
+    }
+
+    std::vector<double> GetOnePath();
+
+    std::vector<std::vector<double> > GetNPaths(int num_paths);
 
     inline std::vector<double> get_time_points(){
         return time_points_;
     }
 
 private:
-    const MarketParameters & market_params_;
-    RandGenerator & rand_generator_;
+    MarketParameters market_params_;
+    std::unique_ptr<RandGenerator> rand_generator_;
     double spot_;
     double num_times_;
     std::vector<double> time_points_;

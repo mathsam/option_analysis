@@ -33,6 +33,15 @@ Matrix2d::Matrix2d(std::vector<std::vector<double> > && array_in):
     }
 }
 
+Matrix2d::Matrix2d(const std::vector<double> & array_in):
+  num_rows_(array_in.size()), num_columns_(1),
+  array2d_(array_in.size(), std::vector<double> (1)),
+  LU_if_updated_(false)
+{
+    for(int i = 0; i < num_rows_; i++)
+        array2d_[i][0] = array_in[i];
+}
+
 Matrix2d::Matrix2d(const Matrix2d & matrix_in):
   num_rows_(matrix_in.num_rows_), num_columns_(matrix_in.num_columns_),
   array2d_(matrix_in.array2d_),
@@ -311,6 +320,16 @@ Matrix2d Matrix2d::dot(const Matrix2d & matrix_in){
         }
     }
 
+    return matrix_out;
+}
+
+Matrix2d Matrix2d::transpose(){
+    Matrix2d matrix_out (num_columns_, num_rows_);
+    for(int i = 0; i < num_columns_; i++){
+        for(int j = 0; j < num_rows_; j++){
+            matrix_out(i,j) = array2d_[j][i];
+        }
+    }
     return matrix_out;
 }
 

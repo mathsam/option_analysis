@@ -5,7 +5,7 @@
 PathGenerator::PathGenerator(const MarketParameters & market_params,
                              RandGenerator & rand_gen,
                   double spot, int num_times, double expiration_time):
-  market_params_(market_params), rand_generator_(rand_gen),
+  market_params_(market_params), rand_generator_(rand_gen.clone()),
   spot_(spot), num_times_(num_times), time_points_(num_times) {
     if (spot <= 0.0)
         throw std::invalid_argument("spot price must be positive");
@@ -24,7 +24,7 @@ PathGenerator::PathGenerator(const MarketParameters & market_params,
 PathGenerator::PathGenerator(const MarketParameters & market_params,
                   RandGenerator & rand_gen,
                   double spot, const std::vector<double> & time_points):
-  market_params_(market_params), rand_generator_(rand_gen),
+  market_params_(market_params), rand_generator_(rand_gen.clone()),
   spot_(spot), num_times_(time_points.size()), time_points_(time_points){
     if (spot <= 0.0)
         throw std::invalid_argument("spot price must be positive");
@@ -44,10 +44,24 @@ PathGenerator::PathGenerator(const MarketParameters & market_params,
     }
 }
 
-void PathGenerator::GetOnePath(std::vector<double> & path_out){
-    if(path_out.size() != num_times_)
-        throw std::invalid_argument(
-                     "size of path_out does not match number of times");
+PathGenerator::PathGenerator(const PathGenerator & path_gen):
+  market_params_(path_gen.market_params_), 
+  rand_generator_(path_gen.rand_generator_->clone()),
+  spot_(path_gen.spot_),
+  num_times_(path_gen.num_times_),
+  time_points_(path_gen.time_points_){
+}
+
+PathGenerator & PathGenerator::operator=(const PathGenerator & path_gen){
+  market_params_  = path_gen.market_params_;
+  rand_generator_.reset(path_gen.rand_generator_->clone());
+  spot_           = path_gen.spot_;
+  num_times_      = path_gen.num_times_;
+  time_points_    = path_gen.time_points_;
+}
+
+std::vector<double> PathGenerator::GetOnePath(){
+    std::vector<double> path_out(num_times_);
 
     double S_i     = spot_;
 
@@ -60,7 +74,7 @@ void PathGenerator::GetOnePath(std::vector<double> & path_out){
         double int_sigma_square = market_params_.volatility_->IntegralSquare(
                                                             t_left, t_right);
         double norm_rand;
-        rand_generator_.GenNormRand(norm_rand);
+        rand_generator_->GenNormRand(norm_rand);
         S_i = S_i *( std::exp(
                   market_params_.interest_rate_->Integral(t_left, t_right) 
                 - market_params_.divident_rate_->Integral(t_left, t_right)
@@ -71,15 +85,15 @@ void PathGenerator::GetOnePath(std::vector<double> & path_out){
                     );
        path_out[i] = S_i;
     }
+    return path_out;
 }
 
-void PathGenerator::GetNPaths(std::vector<std::vector<double> > & paths_out){
-    if(paths_out.size() < 1)
-        throw std::invalid_argument("empty vector paths_out");
-    if(paths_out[0].size() != num_times_)
-        throw std::invalid_argument(
-                     "size of paths_out does not match number of times");
+std::vector<std::vector<double> > PathGenerator::GetNPaths(int num_paths){
+    std::vector<std::vector<double> > paths_out(num_paths, 
+                                             std::vector<double> (num_times_));
 
-    for(int i=0; i < paths_out.size(); ++i)
-        GetOnePath(paths_out[i]);
+    for(int i=0; i < num_paths; ++i)
+        paths_out[i] = GetOnePath();
+
+    return paths_out;
 }

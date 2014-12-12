@@ -60,6 +60,9 @@ public:
     /// move semantics: initialize with rvalue vector<vector<double> >
     Matrix2d(std::vector<std::vector<double> > && array_in);
 
+    /// create a Nx1 matrix, which is often appears on the rhs of Ax = b
+    Matrix2d(const std::vector<double> & array_in);
+
     /// copy constructor
     Matrix2d(const Matrix2d & matrix_in);
 
@@ -153,6 +156,8 @@ public:
      * lhs(i,k) = sum(rhs1(i,j)*(j,k)) over j
      */
     Matrix2d dot(const Matrix2d & matrix_in);
+
+    Matrix2d transpose();
 
     /// overload insertion operator for easy display to screen
     friend std::ostream & operator<<(std::ostream & os, 

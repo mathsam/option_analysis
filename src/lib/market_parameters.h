@@ -73,10 +73,11 @@ private:
 
 
 /**
- * @brief a class that combines market parameters together
+ * @brief a class that combines market parameters together and thus provides a
+ *        uniform interface.
  *
- * In this work this class essentially contains just volatility and interest
- * rate.
+ * In current implemetation, this class contains just volatility, interest
+ * rate and divident rate.
  */
 class MarketParameters{
 public:
@@ -95,7 +96,7 @@ public:
 
     ~MarketParameters();
 
-    MarketParameters(MarketParameters & orig_params);
+    MarketParameters(const MarketParameters & orig_params);
 
     MarketParameters & operator=(const MarketParameters & orig_params);
 };

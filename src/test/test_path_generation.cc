@@ -6,8 +6,8 @@
 #include<iostream>
 
 int main(){
-    const int kPathLength = 500;
-    const int kNumPaths   = 5000;
+    const int kPathLength = 50;
+    const int kNumPaths   = 50;
     double spot = 10;
     int num_times = kPathLength;
     double expiration_time = 1;
@@ -27,6 +27,9 @@ int main(){
     PathGenerator my_path_gen(market_params,
                               rand_gen,
                               spot, num_times, expiration_time);
+
+    PathGenerator my_path_gen1(my_path_gen);
+    my_path_gen1 = my_path_gen;
 
     std::vector<double> bs_path(kPathLength);
 
