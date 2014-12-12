@@ -19,7 +19,11 @@ public:
     FuncGenerator():
         num_funcs_ (0){
     }
-    
+
+    FuncGenerator(const FuncGenerator& func_gen);
+
+    FuncGenerator & operator=(const FuncGenerator & func_gen);
+   
     /// set coeffs_
     void set_coeffs(const std::vector<double> & coeffs);
 
@@ -38,13 +42,7 @@ protected:
                                   * < A0 + A1*x + A2*x^2 + ...
                                   */
     int num_funcs_;
-    bool  is_initialized_; ///< whether ready to evaulate
-
-private:
-    FuncGenerator(const FuncGenerator& foo):
-      num_funcs_(0){};
-
-    FuncGenerator & operator=(const FuncGenerator & foo){};
+    bool is_initialized_; ///< whether ready to evaulate
 }; 
 
 /**

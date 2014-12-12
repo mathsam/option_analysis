@@ -28,7 +28,7 @@ public:
     virtual double PayOff(double spot) const = 0;
 
     /// virtual constructor
-    virtual VanillaOption* clone() = 0;
+    virtual VanillaOption* clone() const = 0;
 };
 
 /**
@@ -41,7 +41,7 @@ public:
 
     double PayOff(double spot) const;
 
-    VanillaOption * clone();
+    VanillaOption * clone() const;
 
 };
 
@@ -55,7 +55,7 @@ public:
 
     double PayOff(double spot) const;
 
-    VanillaOption * clone();
+    VanillaOption * clone() const;
 };
 
 

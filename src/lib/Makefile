@@ -1,14 +1,11 @@
 CC = g++
-CC_FLAGS = -Wall -O3
+CC_FLAGS = -std=c++11
 
+OBJS = func_generation.o least_square_mc.o market_parameters.o matrix2d.o park_miller_rand.o path_generation.o rand_generator.o vanilla_option.o test_least_square.o
+all: pricer.x
 
-all: parkmiller.x path_gen.x
-
-parkmiller.x: park_miller_rand.o test_park_miller_rand.o rand_generator.o
-	$(CC) $^ -o $@
-
-path_gen.x: test_path_generation.o rand_generator.o park_miller_rand.o market_parameters.o path_generation.o
-	$(CC) $^ -o $@
+pricer.x: $(OBJS) 
+	$(CC) $(CC_FLAGS) $^ -o $@
 
 %.o: %.cc
 	$(CC) $(CC_FLAGS) -c $< -o $@

@@ -10,7 +10,7 @@ double VanillaCall::PayOff(double spot) const{
     else return 0.0;
 }
 
-VanillaOption* VanillaCall::clone(){
+VanillaOption* VanillaCall::clone() const{
     return new VanillaCall (*this);
 }
 
@@ -24,6 +24,6 @@ double VanillaPut::PayOff(double spot) const{
     else return 0.0;
 }
 
-VanillaOption * VanillaPut::clone(){
+VanillaOption * VanillaPut::clone() const{
     return new VanillaPut (*this);
 }

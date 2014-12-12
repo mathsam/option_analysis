@@ -19,6 +19,8 @@ public:
      * The browian motion is time series S0, S1, ... Sn. S0 is at time
      * zero, and is equal to spot. n is num_times. Sn is at the 
      * expiration_time.
+     * @note time zero is not included in output. Only output S1, S2, ...
+     *       Sn.
      * The times are (1/N, 2/N, ..., 1) * expiration_time, where N is
      * num_times.
      * @param params_in contains volatility and interest rate
@@ -57,6 +59,11 @@ public:
     inline std::vector<double> get_time_points(){
         return time_points_;
     }
+
+    /// calculate the discounted price one time step back given current price
+    /// and current time step
+    std::vector<double> DiscountOneStepBack(std::vector<double> current_price,
+                                            int current_time_step);
 
 private:
     MarketParameters market_params_;

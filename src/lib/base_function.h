@@ -23,7 +23,9 @@ protected:
     int order_;
 };
 
-
+/**
+ * @brief callable polynomial base funtions, i.e., 1, x, x^2, x^3, ...
+ */
 class Polynomial: public BaseFunction{
 public:
     ///initialize a polynomial with order n, that is x^n
@@ -34,9 +36,10 @@ public:
 
     Polynomial & operator=(const Polynomial & poly){
         order_ = poly.order_;
+        return (*this);
     }
 
-    double operator()(double x) const{
+    inline double operator()(double x) const{
         return std::pow(x,order_);
     } 
 

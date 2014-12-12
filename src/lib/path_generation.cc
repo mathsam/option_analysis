@@ -97,3 +97,20 @@ std::vector<std::vector<double> > PathGenerator::GetNPaths(int num_paths){
 
     return paths_out;
 }
+
+std::vector<double> PathGenerator::DiscountOneStepBack(
+                                            std::vector<double> current_price,
+                                            int current_time_step){
+    std::vector<double> previous_price (current_price);
+    double t_right = time_points_[current_time_step];
+    double t_left  = 0.;
+    if (current_time_step > 0) t_left = time_points_[current_time_step -1];
+    
+    for(int i = 0; i < previous_price.size(); i++){
+        previous_price[i] *= std::exp(
+                   -market_params_.interest_rate_->Integral(t_left, t_right)
+                                     );
+    }
+
+    return previous_price;
+}
