@@ -157,7 +157,7 @@ public:
      */
     Matrix2d dot(const Matrix2d & matrix_in);
 
-    Matrix2d transpose();
+    Matrix2d transpose(void);
 
     /// overload insertion operator for easy display to screen
     friend std::ostream & operator<<(std::ostream & os, 

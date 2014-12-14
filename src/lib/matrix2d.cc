@@ -92,6 +92,7 @@ Matrix2d & Matrix2d::operator=(double value){
         }
     }
     LU_if_updated_ = false;
+    return *this;
 }
 
 double & Matrix2d::operator()(int i_row, int j_colmn){
@@ -323,7 +324,7 @@ Matrix2d Matrix2d::dot(const Matrix2d & matrix_in){
     return matrix_out;
 }
 
-Matrix2d Matrix2d::transpose(){
+Matrix2d Matrix2d::transpose(void){
     Matrix2d matrix_out (num_columns_, num_rows_);
     for(int i = 0; i < num_columns_; i++){
         for(int j = 0; j < num_rows_; j++){

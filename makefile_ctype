@@ -1,0 +1,25 @@
+CC = g++
+CC_FLAGS = -fPIC -std=c++11 -fvisibility=hidden
+
+LIB_DIR  = ./src/lib
+BIN_DIR  = ./bin
+LIB_NAME = least_square_mc_lib.so
+OBJS = func_generation.o least_square_mc.o market_parameters.o matrix2d.o park_miller_rand.o path_generation.o rand_generator.o vanilla_option.o least_square_mc_cwrapper.o 
+
+OBJS := $(addprefix $(BIN_DIR)/, $(OBJS))
+LIB_NAME := $(BIN_DIR)/$(LIB_NAME)
+
+vpath %.cc $(LIB_DIR)
+vpath %.c  $(LIB_DIR)
+
+all: $(LIB_NAME)
+
+$(BIN_DIR)/%.o: $(LIB_DIR)/%.c
+	$(CC) $(CC_FLAGS) -c $< -o $@ 
+
+$(BIN_DIR)/%.o: $(LIB_DIR)/%.cc
+	$(CC) $(CC_FLAGS) -c $< -o $@
+
+$(LIB_NAME): $(OBJS)
+	$(CC) $(CC_FLAGS) -shared  -Wl,-soname,$(LIB_NAME) $^ -o $@ 
+
