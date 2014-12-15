@@ -52,16 +52,6 @@ Matrix2d::Matrix2d(const Matrix2d& matrix_in):
 {
 }
 
-Matrix2d::Matrix2d(Matrix2d& matrix_in):
-  num_rows_(matrix_in.num_rows_), num_columns_(matrix_in.num_columns_),
-  array2d_(matrix_in.array2d_),
-  LU_matrix_(matrix_in.LU_matrix_),
-  permutation_(matrix_in.permutation_),
-  LU_if_updated_(matrix_in.LU_if_updated_),
-  det_(matrix_in.det_)
-{
-}
-
 Matrix2d::Matrix2d(Matrix2d&& matrix_in):
   num_rows_(matrix_in.num_rows_), num_columns_(matrix_in.num_columns_),
   array2d_(std::move(matrix_in.array2d_)),

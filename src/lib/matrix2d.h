@@ -66,8 +66,6 @@ public:
     /// copy constructor
     Matrix2d(const Matrix2d& matrix_in);
 
-    Matrix2d(Matrix2d& matrix_in);
-
     /// move semantics: initialize with rvalue Matrix2d object
     explicit Matrix2d(Matrix2d&& matrix_in);
 
