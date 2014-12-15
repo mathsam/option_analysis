@@ -52,28 +52,30 @@ public:
      * @param num_colmns number of columns
      * @param init_val value at initilization, default is 0.0
      */
-    Matrix2d(int num_rows, int num_colmns, double init_val = 0.0);
+    explicit Matrix2d(int num_rows, int num_colmns, double init_val = 0.0);
 
     /// initialize a matrix using vector<vector<double> >
-    Matrix2d(const std::vector<std::vector<double> > & array_in);
+    explicit Matrix2d(const std::vector<std::vector<double> >& array_in);
 
     /// move semantics: initialize with rvalue vector<vector<double> >
-    Matrix2d(std::vector<std::vector<double> > && array_in);
+    explicit Matrix2d(std::vector<std::vector<double> >&& array_in);
 
     /// create a Nx1 matrix, which is often appears on the rhs of Ax = b
-    Matrix2d(const std::vector<double> & array_in);
+    explicit Matrix2d(const std::vector<double>& array_in);
 
     /// copy constructor
-    Matrix2d(const Matrix2d & matrix_in);
+    Matrix2d(const Matrix2d& matrix_in);
+
+    Matrix2d(Matrix2d& matrix_in);
 
     /// move semantics: initialize with rvalue Matrix2d object
-    Matrix2d(Matrix2d && matrix_in);
+    explicit Matrix2d(Matrix2d&& matrix_in);
 
     /// copy assgiment operator
     Matrix2d & operator=(const Matrix2d & matrix_in);
 
     /// move semantics: assgin with rvalue Matrix2d object
-    Matrix2d & operator=(Matrix2d && matrix_in);
+    Matrix2d & operator=(Matrix2d&& matrix_in);
 
     /// asign all elements in the matrix to a single value
     Matrix2d & operator=(double value);
