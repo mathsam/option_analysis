@@ -48,4 +48,47 @@ public:
     } 
 };
 
+/**
+ *@brief optimized verison of polynomial base functions, i.e., 1, x, x^2, ...
+ */
+class PolynomialOpt: public BaseFunction{
+public:
+    PolynomialOpt(int n): BaseFunction(n){};
+
+    PolynomialOpt(const PolynomialOpt & poly):
+      BaseFunction(poly.order_){};
+
+    PolynomialOpt & operator=(const PolynomialOpt & poly){
+        order_ = poly.order_;
+        return (*this);
+    }
+
+    inline double operator()(double x) const{
+       static double last_x_       = 0.; ///< x calculated last time
+       static int last_order_      = 1; ///< order calculated last time
+       static double last_value_   = 0.; ///< last_x_^last_order_ 
+       if (order_ == 0){
+           last_x_ = x;
+           last_order_ = 0;
+           last_value_ = 1.;
+           return 1.;
+       }
+
+       if (x==last_x_ && order_ == last_order_+1){
+            last_order_++;
+            last_value_ = last_value_*x;
+            return last_value_;
+        }
+       
+        last_x_ = x;
+        last_order_ = order_;
+        last_value_      = std::pow(x,order_); 
+        return last_value_; 
+    }
+
+    BaseFunction* clone() const{
+        return new PolynomialOpt (*this);
+    }
+};
+
 #endif //_BASE_FUNCTION_H_

@@ -45,7 +45,8 @@ int main(){
 
     FuncFit polyfit;
     for(int i = 0; i < kNumBases; i++){
-        Polynomial * tmp = new Polynomial (i);
+        PolynomialOpt * tmp = new PolynomialOpt (i);
+//        Polynomial * tmp = new Polynomial (i);
         polyfit.add_base(tmp);
     }
 
