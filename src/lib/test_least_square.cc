@@ -11,7 +11,7 @@
 
 int main(){
     const int kPathLength = 50;
-    const int kNumPaths   = 100000;
+    const int kNumPaths   = 10000;
 
     double v, r, strike;
     double spot = 1.0;
