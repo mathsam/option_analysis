@@ -1,7 +1,7 @@
 A suite of tool to do financial analyses. Focus on option pricing using Monte 
-arlo simulation.
+Carlo simulation.
 
-Contains:
+<h2>Contains:</h2>
 
 Random number generator class; 
 Pathgeneration class which generates geometric brownian motion; 
@@ -15,12 +15,12 @@ Tests for each classes are in ./src/test
 
 
 Currently, implemented an interface to price American option and a Python 
-wrapper for it. More different kinds of options can be implemented easily in 
-using this library.
+wrapper for it. More different kinds of options can be implemented easily 
+using the framework in this library.
 
-Usage:
+<h2>Usage:</h2>
 
-in the current directory, type
+In the current directory, type
 
     make -f makefile_ctypes
 
